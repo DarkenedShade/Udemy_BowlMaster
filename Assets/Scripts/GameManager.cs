@@ -9,6 +9,11 @@ public class GameManager : MonoBehaviour
     private Ball ball;
     private ScoreDisplay scoreDisplay;
 
+    private bool gameOver = false;
+    public bool GameOver
+    {
+        get { return gameOver; }
+    }
 
     private List<int> rolls = new List<int>();
 
@@ -42,6 +47,7 @@ public class GameManager : MonoBehaviour
 
         if (ScoreMaster.ScoreCumulative(rolls).Count >= 10)
         {
+            gameOver = true;
             touchPanel.SetActive(false);
             resetPanel.gameObject.SetActive(true);
             resetPanel.SetFinalScore(ScoreMaster.ScoreCumulative(rolls)[9]);
@@ -50,6 +56,7 @@ public class GameManager : MonoBehaviour
 
     public void ResetAndReplay()
     {
+        gameOver = false;
         pinSetter.TakeAction(ActionMaster.Action.Reset);
         ball.Reset();
         rolls.Clear();
